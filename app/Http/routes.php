@@ -18,3 +18,6 @@ Route::get('/', function () {
 Route::auth();
 
 Route::get('/home', 'HomeController@index');
+
+//initial route for admins with resource for crud operations
+Route::resource('/admin/users', 'AdminUsersController');
