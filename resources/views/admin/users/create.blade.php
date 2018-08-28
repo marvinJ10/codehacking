@@ -2,7 +2,11 @@
 
 @section('content')
     <h1>Create User</h1>
-
+    <div class="row">
+        {{--outputs the errors on the form during its validation--}}
+        @include('includes.form_error')
+    </div>
+    <div class="row">
          <center>
 
              {!! Form::open(['method'=>'POST','action'=>'AdminUsersController@store', 'files'=>true]) !!}
@@ -33,12 +37,12 @@
                  {!! Form::submit('Create User',['class'=>'btn btn-primary']) !!}
              </div>
 
-             </div>
+
 
 
          {!! Form::close() !!}
          </center>
-         {{--outputs the errors on the form during its validation--}}
-         @include('includes.form_error')
+    </div>
+
 @endsection
 

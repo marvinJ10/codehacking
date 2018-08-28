@@ -47,43 +47,32 @@ class AdminUsersController extends Controller
      */
     public function store(UsersRequest $request)
     {
-        //
-        //VALIDATION before saving to the database
-//               $this->validate($request, [
-//                   'name' =>  'bail|unique:posts|max:255|required',
-//                   'email' => 'required',
-//                   'role'=>'required',
-//                   //'path' => 'required',
-//
-//        ]);
-              // return $request->all();
+           //SAVING USER INPUT TO DATABASE
+        //check if password is empty
+        if(trim($request->password) == '' ){
 
-        //SAVING USER INPUT TO DATABASE
-
-//        if(trim($request->password) == '' ){
-//
-//            $input = $request->except('password');
-//        }else{
+            $input = $request->except('password');
+        }else{
 
             $input = $request->all();
-
-//        }
+            //password encryption
+            $input['password'] = bcrypt($request->password);
+        }
 
         //check if there is a file or foto attached
         if($file = $request->file('photo_id')){
 
             $name = time().$file->getClientOriginalName();
-            //move to the public\images directory
+            //move to the public\images directory`
             $file->move(public_path().'\images', $name);  // absolute destination path
             //save to the table photos
             $photo = Photo::create(['file'=>$name]);
-
+            //get the id of the photo from the photos table and place it on the users table under column photo_id
             $input['photo_id'] = $photo->id;
 
         }
 
-        //password encryption
-        $input['password'] = bcrypt($request->password);
+
         //after the above then persist the user to the db,
         User::create($input);
 
@@ -109,7 +98,13 @@ class AdminUsersController extends Controller
      */
     public function edit($id)
     {
-        //
+        //Find the user to edit
+        $user = User::findOrFail($id);
+
+        //pass in the roles
+        $roles = Role::lists('role','id')->all();
+
+        return view('admin.users.edit', compact('user','roles'));
     }
 
     /**
@@ -119,9 +114,41 @@ class AdminUsersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Requests\UsersEditRequest $request, $id)
     {
-        //
+        //check if password is empty
+        if(trim($request->password) == '' ){
+
+            $input = $request->except('password');
+        }else{
+
+            $input = $request->all();
+            //password encryption
+            $input['password'] = bcrypt($request->password);
+        }
+
+        //find user to update
+        $user = User::findOrFail($id);
+        //fetch the input for the update method
+        $input = $request->all();
+
+        //check if there is a file or foto attached
+        if($file = $request->file('photo_id')){
+
+            $name = time().$file->getClientOriginalName();
+            //move to the public\images directory`
+            $file->move(public_path().'\images', $name);  // absolute destination path
+            //save to the table photos
+            $photo = Photo::create(['file'=>$name]);
+            //get the id of the photo from the photos table and place it on the users table under column photo_id
+            $input['photo_id'] = $photo->id;
+
+        }
+
+        //now update the user input and redirect
+        $user->update($input);
+        return redirect('/admin/users');
+
     }
 
     /**
