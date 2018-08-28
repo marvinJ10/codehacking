@@ -11,9 +11,8 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected $fillable = [
-        'role_id','is_active','name', 'email', 'password',
-    ];
+    //mass assignment
+    protected $fillable = ['role_id','is_active','name', 'email', 'password','photo_id'];
 
     /**
      * The attributes that should be hidden for arrays.
@@ -25,8 +24,14 @@ class User extends Authenticatable
     ];
 
     //Relationship to the Role--The user belongs to the role
-    public function roles(){
+    public function role(){
         return $this->belongsTo('App\Role');
     }
+
+    //Relationship to the Photo--The user belongs to the photo
+    public function photo(){
+        return $this->belongsTo('App\Photo');
+    }
+
 
 }

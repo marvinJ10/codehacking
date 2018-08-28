@@ -25,7 +25,7 @@ class UsersRequest extends Request
     {
         return [
             //VALIDATION
-            'name' =>  'bail|unique:posts|max:255|required',
+            'name' =>  'required',
             'email' => 'required',
             'role_id'=>'required',
             'is_active'=>'required',

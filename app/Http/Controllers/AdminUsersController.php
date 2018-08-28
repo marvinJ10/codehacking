@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UsersRequest;
+use App\Photo;
 use App\Role;
 use App\User;
 use Illuminate\Http\Request;
@@ -19,7 +20,7 @@ class AdminUsersController extends Controller
     public function index()
     {
         //Query all the available users
-        $users = User::all();
+        $users = User::orderBy('id','dec')->get();
 
         return view('admin.users.index', compact('users'));
     }
@@ -33,6 +34,7 @@ class AdminUsersController extends Controller
     {
         //allow fetching from the DB
         $roles = Role::lists('role','id')->all();
+
         return view('admin.users.create', compact('roles'));
 
     }
@@ -54,8 +56,38 @@ class AdminUsersController extends Controller
 //                   //'path' => 'required',
 //
 //        ]);
-               return $request->all();
+              // return $request->all();
 
+        //SAVING USER INPUT TO DATABASE
+
+//        if(trim($request->password) == '' ){
+//
+//            $input = $request->except('password');
+//        }else{
+
+            $input = $request->all();
+
+//        }
+
+        //check if there is a file or foto attached
+        if($file = $request->file('photo_id')){
+
+            $name = time().$file->getClientOriginalName();
+            //move to the public\images directory
+            $file->move(public_path().'\images', $name);  // absolute destination path
+            //save to the table photos
+            $photo = Photo::create(['file'=>$name]);
+
+            $input['photo_id'] = $photo->id;
+
+        }
+
+        //password encryption
+        $input['password'] = bcrypt($request->password);
+        //after the above then persist the user to the db,
+        User::create($input);
+
+        return redirect('/admin/users');
     }
 
     /**
