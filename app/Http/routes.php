@@ -30,4 +30,6 @@ Route::get('/admin' , function (){
 Route::group(['middleware'=>'admin'], function(){
     //initial route for admins with resource for crud operations
     Route::resource('/admin/users', 'AdminUsersController');
+    //posts' route
+    Route::resource('/admin/posts', 'AdminPostsController');
 });

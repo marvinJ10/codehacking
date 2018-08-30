@@ -61,15 +61,15 @@ class AdminUsersController extends Controller
         }
 
         //check if there is a file or foto attached
-        if($file = $request->file('photo_id')){
+            if($file = $request->file('photo_id')){
 
-            $name = time().$file->getClientOriginalName();
-            //move to the public\images directory`
-            $file->move(public_path().'\images', $name);  // absolute destination path
-            //save to the table photos
-            $photo = Photo::create(['file'=>$name]);
-            //get the id of the photo from the photos table and place it on the users table under column photo_id
-            $input['photo_id'] = $photo->id;
+                $name = time().$file->getClientOriginalName();
+                //move to the public\images directory`
+                $file->move(public_path().'\images', $name);  // absolute destination path
+                //save to the table photos
+                $photo = Photo::create(['file'=>$name]);
+                //get the id of the photo from the photos table and place it on the users table under column photo_id
+                $input['photo_id'] = $photo->id;
 
         }
 
