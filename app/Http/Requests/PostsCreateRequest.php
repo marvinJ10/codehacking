@@ -26,8 +26,8 @@ class PostsCreateRequest extends Request
         return [
             //validation fields
             'title'=>'required',
-//            'category_id'=>'required',
-//            'photo_id'=>'required',
+            'category_id'=>'required',
+            'photo_id'=>'required',
             'body'=>'required',
         ];
     }

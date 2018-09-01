@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Category;
 use App\Http\Requests\PostsCreateRequest;
 use App\Photo;
 use App\Post;
@@ -34,7 +35,8 @@ class AdminPostsController extends Controller
     public function create()
     {
         //
-        return view('admin.posts.create');
+        $categories = Category::lists('name','id')->all();
+        return view('admin.posts.create', compact('categories'));
     }
 
     /**
@@ -88,7 +90,13 @@ class AdminPostsController extends Controller
      */
     public function edit($id)
     {
-        //
+        //find the post
+        $post = Post::findOrFail($id);
+
+        //populate the categories
+        $categories = Category::lists('name','id')->all();
+
+        return view('admin.posts.edit', compact('post','categories'));
     }
 
     /**
@@ -100,7 +108,27 @@ class AdminPostsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        //get all the fields
+        $input = $request->all();
+//        //get the logged in user for population to db relationship
+//        $user = Auth::user();
+        //check if there is a file or photo attached
+        if ($file = $request->file('photo_id')) {
+
+            $name = time() . $file->getClientOriginalName();
+            //move to the public\images directory`
+            $file->move(public_path() . '\images', $name);  // absolute destination path
+            //save to the table photos
+            $photo = Photo::create(['file' => $name]);
+            //get the id of the photo from the photos table and place it on the users table under column photo_id
+            $input['photo_id'] = $photo->id;
+        }
+
+        //get the user and the queried postID and update using all the inputs
+        Auth::user()->posts()->whereId($id)->first()->update($input);
+
+        return redirect('/admin/posts/');
+
     }
 
     /**
@@ -111,6 +139,16 @@ class AdminPostsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        //find the id to be destroyed
+        $post = Post::findOrFail($id);
+        //image deletion alongside user ID
+        unlink(public_path().$post->photo->file);  // absolute destination path
+
+        $post->destroy($id);
+
+
+        Session::flash('deleted_post','The post has been deleted');
+
+        return redirect('/admin/posts');
     }
 }

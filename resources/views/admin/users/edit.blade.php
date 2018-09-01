@@ -9,7 +9,7 @@
     <div class="row">
 
     <div class="col-lg-3">
-        <img src ="{{$user->photo ? $user->photo->file : 'https://via.placeholder.com/400x300'}}" alt="" class=img-responsive img-rounded>
+        <img src height="{{$user->photo ? $user->photo->file : 'https://via.placeholder.com/400x300'}}" alt="" class=img-responsive img-rounded>
 
     </div>
     <center>
@@ -34,8 +34,8 @@
                 {!!Form::label('photo_id', 'Photo:') !!}
                 {!!Form::file('photo_id',null, ['class'=>'form-control']) !!}
 
-                {!!Form::label('password', 'Password:') !!}
-                {!!Form::password('password', ['class'=>'form-control']) !!}
+               {{-- {!!Form::label('password', 'Password:') !!}
+                {!!Form::password('password', ['class'=>'form-control']) !!}--}}
 
             </div>
 

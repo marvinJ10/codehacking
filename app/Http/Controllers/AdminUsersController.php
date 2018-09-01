@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UsersEditRequest;
 use App\Http\Requests\UsersRequest;
 use App\Photo;
 use App\Role;
@@ -116,18 +117,11 @@ class AdminUsersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Requests\UsersEditRequest $request, $id)
+    public function update(UsersEditRequest $request, $id)
     {
-        //check if password is empty
-        if(trim($request->password) == '' ){
 
-            $input = $request->except('password');
-        }else{
-
-            $input = $request->all();
             //password encryption
             $input['password'] = bcrypt($request->password);
-        }
 
         //find user to update
         $user = User::findOrFail($id);
@@ -162,15 +156,18 @@ class AdminUsersController extends Controller
      */
     public function destroy($id)
     {
-        //
+        // return 'DESTROY';
+
         $user = User::findOrFail($id);
-        //image delation alongside user ID
-        unlink(public_path().$user->photo->file);  // absolute destination path
 
-        $user->destroy($id);
+        // remove the file at public/images/filename and record in photos table
+        unlink(public_path().$user->photo->file);
+        Photo::findOrFail($user->photo_id)->delete();
 
+        Session::flash('deleted_user',$user->name);
 
-        Session::flash('deleted_user','The user has been deleted');
+        $user->delete();
+
 
         return redirect('/admin/users');
 

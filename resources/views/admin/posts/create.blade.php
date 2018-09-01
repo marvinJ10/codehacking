@@ -17,7 +17,7 @@
                 {!!Form::text('title',null, ['class'=>'form-control']) !!}<br>
 
                 {!!Form::label('category_id', 'Category:') !!}
-                {!!Form::select('category_id',array(1=>'PhP', 0=>'Javascript'),null,['class'=>'form-control']) !!}
+                {!!Form::select('category_id',[''=>'Choose Category'] + $categories, null, ['class'=>'form-control']) !!}<br>
 
                 {!!Form::label('photo_id', 'Photo:') !!}
                 {!!Form::file('photo_id',null, ['class'=>'form-control']) !!}
