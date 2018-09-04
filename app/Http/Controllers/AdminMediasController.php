@@ -20,7 +20,7 @@ class AdminMediasController extends Controller
     public  function  create(){
         return view('admin.media.create');
     }
-    public function store(PostsCreateRequest $request)
+    public function store(Request $request)
     {
         //get file id
         $file = $request->file('file');
@@ -29,7 +29,7 @@ class AdminMediasController extends Controller
             //move to the public\images directory`
             $file->move(public_path() . '\images', $name);  // absolute destination path
             //save to the table photos
-            $photo = Photo::create(['file' => $name]);
+            Photo::create(['file' => $name]);
 
         }
 
