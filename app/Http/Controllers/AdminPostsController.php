@@ -151,4 +151,12 @@ class AdminPostsController extends Controller
 
         return redirect('/admin/posts');
     }
+
+    //for the route posts/{id} outside the admin middleware
+    public function post($id){
+        //get the post id
+        $post = Post::findOrFail($id);
+        return view('post',compact('post'));
+
+    }
 }

@@ -19,15 +19,17 @@ Route::auth();
 
 Route::get('/home', 'HomeController@index');
 
+//a nameroute for the post outside the admin middlewaee
+Route::get('/post/{id}', ['as'=>'home.post','uses'=>'AdminPostsController@post']);
 
-
-//Test the admin homepage
-Route::get('/admin' , function (){
-    return view('admin.index');
-});
 
 //Route group for the admin middleware
 Route::group(['middleware'=>'admin'], function(){
+
+    //Test the admin homepage
+    Route::get('/admin' , function (){
+        return view('admin.index');
+    });
     //initial route for admins with resource for crud operations
     Route::resource('/admin/users', 'AdminUsersController');
     //posts' route
