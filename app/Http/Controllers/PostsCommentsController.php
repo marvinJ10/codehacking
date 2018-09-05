@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Comment;
+use App\Post;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -73,11 +74,16 @@ class PostsCommentsController extends Controller
      */
     public function show($id)
     {
-        //
+        //get the post id
+        $post = Post::findOrFail($id);
+        //show all the comments for the respective id
+        $comments = $post->comments;
+
+        return view('admin.comments.show', compact('comments'));
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Show the form for editing the  specified resource.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
@@ -96,7 +102,11 @@ class PostsCommentsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        //update the request
+        Comment::findOrFail($id)->update($request->all());
+
+        // return redirect('/admin/comments');
+        return redirect()->back();
     }
 
     /**
@@ -107,6 +117,9 @@ class PostsCommentsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        //delete the comment
+        Comment::findOrFail($id)->delete();
+        // return redirect('/admin/comments');
+        return redirect()->back();
     }
 }

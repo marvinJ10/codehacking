@@ -22,7 +22,8 @@ class Comment extends Model
     }
 
     //relationship--the comment belongsTo a post
-    public  function post(){
+    public function post (){
+
         return $this->belongsTo('App\Post');
     }
 }
