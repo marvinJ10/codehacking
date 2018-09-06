@@ -24,7 +24,8 @@
             <th>Category</th>
             <th>Title</th>
             <th>Body</th>
-            <th>Comment Link</th>
+            <th>Post Link</th>
+            <th>Comments' Link</th>
             <th>Created At</th>
             <th>Updated At</th>
         </tr>

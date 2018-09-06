@@ -43,3 +43,9 @@ Route::group(['middleware'=>'admin'], function(){
     //replies's route
     Route::resource('/admin/comments/replies', 'PostsRepliesController');
 });
+
+//route for only logged in users
+Route::group(['middleware'=>'auth'], function(){
+    //CommentReplies's route
+    Route::post('comment/reply', 'PostsRepliesController@createReply');
+});

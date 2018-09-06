@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Comment;
+use App\CommentReply;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use Illuminate\Support\Facades\Auth;
 
 class PostsRepliesController extends Controller
 {
@@ -39,6 +42,32 @@ class PostsRepliesController extends Controller
         //
     }
 
+
+    //commentReply method
+    public  function createReply(Request $request){
+        //for populating other fields within the commentsReply table
+
+        //get the logged in user
+        $user = Auth::user();
+
+        //getting other field values of the comment
+
+        $data = [
+            'comment_id'=>$request->comment_id,
+            'author'=>$user->name,
+            'email'=>$user->email,
+            'photo'=>$user->photo->file,
+            'body'=>$request->body,
+        ];
+
+        //create a comment
+        CommentReply::create($data);
+        //flash message
+        $request -> session()->flash('reply_message','Your reply has been submitted for moderation');
+        //redirection
+        return redirect()->back();
+
+    }
     /**
      * Display the specified resource.
      *
@@ -83,4 +112,6 @@ class PostsRepliesController extends Controller
     {
         //
     }
+
+
 }

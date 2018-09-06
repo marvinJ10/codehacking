@@ -14,7 +14,7 @@ class Comment extends Model
         'author',
         'email',
         'body',
-        ''
+        'photo',
     ];
 
     //relationship--the comment has many replies

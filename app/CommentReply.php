@@ -14,6 +14,8 @@ class CommentReply extends Model
         'author',
         'email',
         'body',
+        'photo'
+
     ];
 
     //relationship--the comment belogs to

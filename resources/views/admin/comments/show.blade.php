@@ -65,6 +65,7 @@
         </table>
 
     @else
+        <h1>Comments</h1>
         <h1 class="text-center">No comment</h1>
     @endif
 
