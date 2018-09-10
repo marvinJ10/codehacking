@@ -25,6 +25,7 @@
              <td>{{$comment->email}}</td>
              <td>{{str_limit($comment->body,30)}}</td>
              <td><a href="{{route('home.post',$comment->post->id)}}">View Post</a> </td>
+               <td><a href="{{route('admin.comments.replies.show',$comment->id)}}">View Replies</a> </td>
 
              <td>{{$comment->created_at->diffForHumans()}}</td>
                <td><td>

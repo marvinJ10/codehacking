@@ -21,8 +21,11 @@ class AdminUsersController extends Controller
      */
     public function index()
     {
-        //Query all the available users
-        $users = User::orderBy('id','dec')->get();
+        ////Query all the available users
+        //$users = User::orderBy('id','dec')->get();
+        //Query all the available users and paginate
+
+        $users = User::paginate(2);
 
         return view('admin.users.index', compact('users'));
     }
