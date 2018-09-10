@@ -38,7 +38,7 @@ class AdminUsersController extends Controller
     public function create()
     {
         //allow fetching from the DB
-        $roles = Role::lists('role','id')->all();
+        $roles = Role::pluck('role','id')->all();
 
         return view('admin.users.create', compact('roles'));
 
@@ -108,7 +108,7 @@ class AdminUsersController extends Controller
         $user = User::findOrFail($id);
 
         //pass in the roles
-        $roles = Role::lists('role','id')->all();
+        $roles = Role::pluck('role','id')->all();
 
         return view('admin.users.edit', compact('user','roles'));
     }
