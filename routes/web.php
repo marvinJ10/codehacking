@@ -61,6 +61,10 @@ Route::group(['middleware'=>'admin'], function() {
         'store' => 'admin.media.store',
         'edit' => 'admin.media.edit'
     ]]);
+    // customized admin.medias.upload if you want
+    // Route::name('admin.medias.upload')->get('/admin/medias/upload', 'AdminMediasController@store');
+    // customized multi-medias delete
+    Route::delete('/admin/delete/medias', 'AdminMediasController@deleteMedias');
 
     //comments route
     Route::resource('/admin/comments', 'PostsCommentsController', ['names' => [

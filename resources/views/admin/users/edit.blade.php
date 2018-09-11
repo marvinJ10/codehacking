@@ -1,6 +1,7 @@
 @extends('layouts.admin')
 
 @section('content')
+    @include('includes.tinyeditor')
     <h1>Edit User</h1>
     <div class="row">
         {{--outputs the errors on the form during its validation--}}

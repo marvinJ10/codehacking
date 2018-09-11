@@ -1,6 +1,7 @@
 @extends('layouts.admin')
 
 @section('content')
+    @include('includes.tinyeditor')
     <h1>Create Post</h1>
     <div class="row">
         {{--outputs the errors on the form during its validation--}}
@@ -28,7 +29,7 @@
             </div>
 
             <div class='form-group'>
-                {!! Form::submit('Create User',['class'=>'btn btn-primary']) !!}
+                {!! Form::submit('Create Post',['class'=>'btn btn-primary']) !!}
             </div>
 
             {!! Form::close() !!}

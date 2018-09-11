@@ -25,7 +25,7 @@ class AdminPostsController extends Controller
         ////display the posts
        //$posts = Post::orderBy('id','dec')->get();
        //perform pagination showing only two posts
-        $posts = Post::paginate(2);
+        $posts = Post::paginate(5);
 
         return view('admin.posts.index', compact('posts'));
     }
