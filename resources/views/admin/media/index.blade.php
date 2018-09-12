@@ -20,7 +20,7 @@
             <th>Updated</th>
             <th>
                 <div class='form-group'>
-                    {!! Form::submit('Delete All',['class'=>'btn btn-danger', 'name'=>'delete_all', 'id'=>'delete_all', "disabled"=>"enabled"]) !!}
+                    {!! Form::submit('Delete All',['class'=>'btn btn-danger', 'name'=>'delete_all', 'id'=>'delete_all', "enabled"=>""]) !!}
                 </div>
 
             </th>
