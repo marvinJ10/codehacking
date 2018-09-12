@@ -31,3 +31,49 @@ $factory->define(App\Post::class, function (Faker\Generator $faker) {
 
     ];
 });
+
+$factory->define(App\Role::class, function (Faker\Generator $faker) {
+    return [
+        'role' => $faker->randomElement(['administrator','author','subscriber']),
+
+    ];
+});
+
+$factory->define(App\Category::class, function (Faker\Generator $faker) {
+    return [
+        'name' => $faker->randomElement(['PHP','LARAVEL,','ANDROID CODING','JAVASCRIPT']),
+
+    ];
+});
+
+$factory->define(App\Photo::class, function (Faker\Generator $faker) {
+    return [
+        'file' => 'placeholder.jpg'
+
+    ];
+});
+
+
+$factory->define(App\Comment::class, function (Faker\Generator $faker) {
+    return [
+        'post_id' => $faker->numberBetween(1,10),
+        'is_active' => 1,
+        'author' => $faker->name,
+        'photo' => 'placeholder.jpg',
+        'email' => $faker->safeEmail,
+        'body' => $faker->paragraphs(1,true),
+
+
+    ];
+});
+$factory->define(App\CommentReply::class, function (Faker\Generator $faker) {
+    return [
+        'is_active' => 1,
+        'author' => $faker->name,
+        'photo' => 'placeholder.jpg',
+        'email' => $faker->safeEmail,
+        'body' => $faker->paragraphs(1,true),
+
+
+    ];
+});
